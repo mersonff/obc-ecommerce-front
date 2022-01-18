@@ -18,6 +18,13 @@ const withAuthAdmin = (Component) => {
       !apiData['access-token'] ||
       apiData['aceess-token'] === '') {
       router.push('/Auth/Login')
+    } {
+      router.push({
+        pathname: '/Auth/Login',
+        query: {
+          callback: router.pathname
+        }
+      })
     }
 
     return <Component {...props} />;
