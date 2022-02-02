@@ -19,11 +19,11 @@ interface SignUpData {
 
 const UsersService = {
   signUp: ({
-    name,
-    email,
-    password,
-    password_confirmation
-  }: SignUpData) =>
+             name,
+             email,
+             password,
+             password_confirmation
+           }: SignUpData) =>
     api.post<void>('/auth/v1/user', {
       name,
       email,
@@ -34,7 +34,7 @@ const UsersService = {
     api.post<SignInResponse>('auth/v1/user/sign_in', {
       email,
       password
-    }),
+    })
 }
 
 export default UsersService;

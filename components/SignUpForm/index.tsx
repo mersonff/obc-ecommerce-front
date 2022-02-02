@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { InputGroup, FormControl, Button, Row, Col } from 'react-bootstrap';
 import BlueBackground from '../shared/BlueBackground';
@@ -23,11 +24,11 @@ const SignUpForm: React.FC<SignUpProps> = ({ titlePhrase, buttonPhrase }) => {
   const dispatch = useDispatch();
 
 
-  const handleSubmit = async (evt: React.FormEvent): Promise<void> => {
+  const handleSubmit = async(evt: React.FormEvent):Promise<void> => {
     evt.preventDefault();
 
-    if (password !== passwordConfirmation) {
-      toast.error('A senha e a confirmação de senha devem ser iguais!')
+    if(password !== passwordConfirmation) {
+      toast.error('Senha e Confirmação de Senha devem ser iguais!')
       return;
     }
     try {
@@ -38,7 +39,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ titlePhrase, buttonPhrase }) => {
         password_confirmation: passwordConfirmation
       });
 
-      toast.info('Registro realizado com sucesso! Para continuar faça seu login.');
+      toast.info('Registrado com successo, faça o log in para continuar!');
 
       dispatch(setLoggedUser({
         id: 0,
@@ -51,8 +52,8 @@ const SignUpForm: React.FC<SignUpProps> = ({ titlePhrase, buttonPhrase }) => {
       setEmail('');
       setPassword('');
       setPasswordConfirmation('');
-    } catch (err) {
-      if (err.response.data.errors) {
+    } catch(err) {
+      if(err.response.data.errors) {
         toast.warning(err.response.data.errors.full_messages[0]);
       }
       console.log(err.response);
@@ -108,7 +109,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ titlePhrase, buttonPhrase }) => {
 
               <InputGroup className="mt-3">
                 <FormControl
-                  placeholder="Confirmação de senha"
+                  placeholder="Confirmação de Senha"
                   type="password"
                   value={passwordConfirmation}
                   onChange={

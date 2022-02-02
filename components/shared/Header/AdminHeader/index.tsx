@@ -10,7 +10,7 @@ interface AdminHeaderProps {
 }
 
 const AdminHeader: React.FC<AdminHeaderProps> = ({ name }) => {
-  return (
+  return(
     <Row className={styles.background}>
       <Col lg={6} xs>
         <Link href="/Admin"><a><FontAwesomeIcon icon={faSignal} color="var(--color-gray-light)" className="ml-3" /></a></Link>
@@ -24,7 +24,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ name }) => {
 
       <Col lg={6} xs>
         <div className="float-right">
-          <span className={styles.name}>{name}</span>
+          <span className={styles.name}>{ name }</span>
           <FontAwesomeIcon icon={faUserCircle} color="var(--color-gray-light)" />
         </div>
       </Col>

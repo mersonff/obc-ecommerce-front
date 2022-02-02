@@ -4,7 +4,7 @@ import User from '../../../dtos/User';
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { loggedUser: null as User },
+  initialState: { loggedUser: null as User } ,
   reducers: {
     setLoggedUser(state, action: PayloadAction<User>) {
       state.loggedUser = action.payload;

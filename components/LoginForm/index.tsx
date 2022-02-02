@@ -18,20 +18,20 @@ interface LoginProps {
 }
 
 const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const loggedUser: User = useSelector((state: AuthState) => state.auth.loggedUser);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const passwordRef = useRef(null);
 
+  const loggedUser: User = useSelector((state: AuthState) => state.auth.loggedUser);
+
   useEffect(() => {
-    if (loggedUser) {
+    if(loggedUser) {
       setEmail(loggedUser.email);
-      if (passwordRef && passwordRef.current) {
+      if(passwordRef && passwordRef.current) {
         passwordRef.current.focus();
       }
     }
@@ -54,25 +54,24 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
 
       dispatch(setLoggedUser(user));
 
-      toast.info('Login realizado com sucesso!');
-
+      toast.info('Logago com sucesso');
       router.push(user.profile === 'admin' ? '/Admin/' : '/')
+
     } catch (err) {
-      toast.error('E-mail ou senha inválidos!');
+      toast.error('E-mail e/ou senha incorretor!');
     }
   }
 
   return (
-
     <form onSubmit={handleSubmit}>
       <Row>
-        <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
+        <Col lg={{span: 6, offset: 3}} md={{span: 8, offset: 2}}>
           <BlueBackground>
-            <h4>{titlePhrase}</h4>
+            <h4>{ titlePhrase }</h4>
 
             <InputGroup className="mt-3">
               <FormControl
-                placeholder="Meu e-mail"
+                placeholder="Meu E-mail"
                 value={email}
                 type="email"
                 onChange={
@@ -80,11 +79,12 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
                     setEmail(evt.target.value)
                 }
                 required
-              />            </InputGroup>
+              />
+            </InputGroup>
 
             <InputGroup className="mt-3">
               <FormControl
-                placeholder="Senha"
+                placeholder="Minha Senha"
                 value={password}
                 type="password"
                 onChange={
@@ -96,14 +96,10 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
               />
             </InputGroup>
 
-            <Button type="submit" className="btn btn-info mt-3 w-100">{buttonPhrase}</Button>
-
+            <Button type="submit" className="btn btn-info mt-3 w-100">{ buttonPhrase }</Button>
             <br />
-
             <Link href="/Auth/PasswordRecovery">Esqueci minha senha</Link> <br />
-
           </BlueBackground>
-
         </Col>
       </Row>
     </form>
