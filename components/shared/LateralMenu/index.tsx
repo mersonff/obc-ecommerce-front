@@ -1,12 +1,12 @@
 import React from 'react';
+import styles from '../../../styles/MenuLateral.module.css';
 import Logo from '../Logo';
-import styles from '../../../styles/LateralMenu.module.css';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignal, faUser, faGamepad, faCheckSquare, faLaptop, faTicketAlt, faDollarSign, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
 
 const LateralMenu: React.FC = () => {
-  return(
+  return (
     <div className={styles.background}>
       <Logo />
 
@@ -14,7 +14,7 @@ const LateralMenu: React.FC = () => {
         <Link href="/Admin">
           <a>
             <FontAwesomeIcon icon={faSignal} color="var(--color-gray-light)" className="mr-3" />
-             Painel Inicial
+            Painel Inicial
             <hr />
           </a>
         </Link>
@@ -22,7 +22,7 @@ const LateralMenu: React.FC = () => {
         <Link href="/Admin/Users/List">
           <a>
             <FontAwesomeIcon icon={faUser} color="var(--color-gray-light)" className="mr-3" />
-              Usuários
+            Usuários
             <hr />
           </a>
         </Link>
@@ -46,15 +46,15 @@ const LateralMenu: React.FC = () => {
         <Link href="/Admin/SystemRequirements/List">
           <a>
             <FontAwesomeIcon icon={faLaptop} color="var(--color-gray-light)" className="mr-3" />
-            Requisitos de Sistemas
-            <hr />
+              Requisitos do sistema
+              <hr />
           </a>
         </Link>
 
         <Link href="/Admin/Coupons/List">
           <a>
             <FontAwesomeIcon icon={faTicketAlt} color="var(--color-gray-light)" className="mr-3" />
-            Cupoms
+            Cupons
             <hr />
           </a>
         </Link>
@@ -62,7 +62,7 @@ const LateralMenu: React.FC = () => {
         <Link href="/Admin/#">
           <a>
             <FontAwesomeIcon icon={faDollarSign} color="var(--color-gray-light)" className="mr-3" />
-            Finaneiro
+            Financeiro
             <hr />
           </a>
         </Link>
@@ -76,7 +76,6 @@ const LateralMenu: React.FC = () => {
         </Link>
       </div>
     </div>
-
   )
 }
 
