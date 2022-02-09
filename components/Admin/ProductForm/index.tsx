@@ -30,7 +30,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('available');
   const [image, setImage] = useState<File>();
-
+  
   const [mode, setMode] = useState('pve');
   const [releaseDate, setReleaseDate] = useState('');
   const [developer, setDeveloper] = useState('');
@@ -38,6 +38,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   const [systemRequirement, setSystemRequirement] = useState(1);
 
   const [productImage, setProductImage] = useState('');
+  const [featured, setFeatured] = useState('false');
 
   const product: Product = useSelector(state => state.product);
 
@@ -46,7 +47,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   const { data, error } = useSwr('/admin/v1/categories?length=999', CategoriesService.index);
   const { data: systemRequirementsData, error: systemRequirementsError } = 
     useSwr('/admin/v1/system_requirements?length=999', SystemRequirementsService.index);
-
+  
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -62,15 +63,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
       setMode(product.mode);      
       setDeveloper(product.developer);
 
-
       // separando a data no T e pegando apenas o valor da data '2020-12-31T00:00:000Z'
       setReleaseDate(product.release_date.split('T')[0]);
-
+      
       // se o system_requirement ou o system_requirement.id não existitem ou forem null ele irá atribuir 1
       setSystemRequirement(product?.system_requirement?.id ?? 1);
 
       setPrice(product.price);
       setStatus(product.status);
+
+      setFeatured(product.featured);
 
       setProductImage(product?.image_url);
     }
@@ -91,7 +93,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
     categories.forEach(category => 
       formData.append(`product[category_ids][]`, category)
     )
-
+    
     formData.append('product[mode]', mode);
     formData.append('product[developer]', developer);
     formData.append('product[release_date]', releaseDate);
@@ -101,6 +103,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
     formData.append('product[status]', status);
 
     formData.append('product[productable]', 'game');
+    formData.append('product[featured]', featured);
 
     if (image) {
       formData.append('product[image]', image);
@@ -292,8 +295,24 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
               </Form.Group>
             </Form.Row>
 
-            <Form.Row>              
-              <Form.Group as={Col} md={6} sm={12} className="p-2">
+            <Form.Row> 
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
+                <Form.Label>Em Destaque</Form.Label>
+                <Form.Control
+                  as="select"
+                  className={styles.secundary_input}
+                  value={featured}
+                  onChange={
+                      (evt: React.ChangeEvent<HTMLSelectElement>) => 
+                        setFeatured(evt.target.value)
+                    }
+                  >
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
                 <Form.Label>Preço</Form.Label>
                 <Form.Control
                   type="text"
@@ -308,7 +327,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
                 />
               </Form.Group>
 
-              <Form.Group as={Col} md={6} sm={12} className="p-2">
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
                 <Form.Label>Status</Form.Label>
                 <Form.Control
                   as="select"

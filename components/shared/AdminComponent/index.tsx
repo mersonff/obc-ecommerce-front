@@ -14,7 +14,7 @@ const AdminComponent: React.FC = ({children}) => {
 
         <Col lg={9}>
           <div className="d-flex flex-column sticky-footer-wrapper container">
-            <AdminHeader name="Nome de Usuário" />
+            <AdminHeader/>
             <div className="flex-fill text-center">
               { children }
             </div>
