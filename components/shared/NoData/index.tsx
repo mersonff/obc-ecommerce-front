@@ -1,4 +1,4 @@
-import styles from '../../../styles/AdminPanel.module.css';
+import styles from './styles.module.css';
 import React from 'react';
 
 interface NoDataProps {
