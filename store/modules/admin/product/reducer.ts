@@ -9,11 +9,11 @@ const productSlice = createSlice({
     setProductToEdit(state: Product, action: PayloadAction<Product>) {
       return state = action.payload;
     },
-    clearProductToEdit(state) {
+    clearProductToEdit(state: Product) {
       return state = null;
     }
   }
-})
+});
 
 export const { setProductToEdit, clearProductToEdit } = productSlice.actions;
 export default productSlice.reducer;

@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import StyledButton from '../../StyledButton';
 import Link from 'next/link';
+
 import { useDispatch } from 'react-redux';
 import { 
     setSearch as setSearchRedux,
     clearSearch
 } from '../../../../store/modules/admin/shared/search/reducer';
+
 import { useRouter } from 'next/router';
+
 interface SearchAndIcon {
     icon: IconProp;
     newPath: string;
@@ -59,7 +62,6 @@ const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
                     <Col lg={10} xs={10}>
                         <InputGroup>
                             <FormControl 
-                                placeholder="Pesquisar usuário" 
                                 placeholder={placeholder}
                                 className={styles.input} 
                                 value={search}
@@ -67,6 +69,7 @@ const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
                                     (evt: React.ChangeEvent<HTMLInputElement>) =>
                                         setSearch(evt.target.value)
                                 }
+
                                 onKeyPress={
                                     (evt: React.KeyboardEvent<HTMLInputElement>) => {
                                         if (evt.key.toLocaleLowerCase() === 'enter') {
@@ -89,14 +92,14 @@ const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
                     </Col>
                 </Row>
             </Col>
+
             <Col lg={2} xs={{span: 3}} className={styles.titleButton}>
                 <Link href={newPath}> 
-                    <a>
                         <StyledButton icon={icon} type_button="blue" />
-                    </a>
                 </Link>
             </Col>
         </Row>
     )
 }
+
 export default SearchAndIcon;

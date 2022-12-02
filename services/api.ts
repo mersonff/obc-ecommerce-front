@@ -22,59 +22,69 @@ function setHeaders(res: AxiosResponse<any>) {
       uid: res.headers.uid
     };
 
-    // @ts-ignore
     api.defaults.headers = apiData;
-    Cookie.set('@api-data', JSON.stringify(apiData));
+    Cookie.set('@api-data', apiData);
   }
 }
 
 api.interceptors.response.use(res => {
-    setHeaders(res);
-    return res;
-  }
-  , err => {
-    // caso um erro ocorra na response, um novo token é retornado, logo devemos atualizá-lo na api e nos cookies
-    if (err.response) {
-      setHeaders(err.response);
+  setHeaders(res);
+  return res;
+}
+, err => {
+  // caso um erro ocorra na response, um novo token é retornado, logo devemos atualizá-lo na api e nos cookies
+  if (err.response) {
+    setHeaders(err.response);
 
-      const data = err.response.data;
+    const data = err.response.data;
 
-      // aqui estamos tratando os erros no padrão que o rails no devolve, se existem algum array de erros, iremos extrair o nome do campo e as mensagens para que as mesmas possam ser exibidas na tela utilizando um toast
-      if (data && data.errors && data.errors.fields) {
-        const errors = data.errors as ApiResponseError;
+    // aqui estamos tratando os erros no padrão que o rails no devolve, se existem algum array de erros, iremos extrair o nome do campo e as mensagens para que as mesmas possam ser exibidas na tela utilizando um toast
+    if (data && data.errors && data.errors.fields) {
+      const errors = data.errors as ApiResponseError;
 
-        const fieldsName = Object.keys(errors.fields)
+      const fieldsName = Object.keys(errors.fields)
 
-        fieldsName.forEach(error => {
-          toast.error(error + ': ' + errors.fields[error].join(`, `))
-        })
+      fieldsName.forEach(error => {
+        toast.error(error + ': ' + errors.fields[error].join(`, `))
+      })
 
-        console.log('errors', errors);
-      }
+      console.log('errors', errors);
     }
+  }
 
-    // caso a response tenha um status de não autorizado ou acesso negado, o usuário será redirecionado para o login.
-    if (err.response && (
+  // caso a response tenha um status de não autorizado ou acesso negado, o usuário será redirecionado para o login.
+  if (err.response && (
       err.response.status === 401 ||
       err.response.status === 403
     )) {
-      Router.push('/Auth/Login');
-    }
+    Router.push('/Auth/Login');
+  }
 
-    throw err;
-  });
+  throw err;
+});
 
 api.interceptors.request.use(req => {
-  if (req.url.includes('admin')) {
+  req.headers = { ContentType: 'application/json' };
 
-    let apiData: ApiData;
-    const apiCookie = (Cookie.get('@api-data'));
+  if (
+    req.url.includes('admin') ||
+    req.url.includes('storefront/v1/wish_items') ||
+    req.url.includes('auth/v1/user') ||
+    req.url.includes('storefront/v1/coupons') ||
+    req.url.includes('storefront/v1/checkouts') ||
+    req.url.includes('storefront/v1/orders') ||
+    req.url.includes('storefront/v1/games')
+  ) {
+    const apiDataCookie = Cookie.get('@api-data');
 
-    if (apiCookie) {
-      apiData = JSON.parse(apiCookie);
-      req.headers = apiData;
+    if (!apiDataCookie) {
+      return req;
     }
+
+    const apiData: ApiData = JSON.parse(apiDataCookie);
+    req.headers = { ...apiData, ...req.headers };
   }
+
   return req;
 })
 

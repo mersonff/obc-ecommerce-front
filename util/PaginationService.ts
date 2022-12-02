@@ -24,7 +24,7 @@ const PaginationService = {
         if (current_page + 1 < total_pages ) {
           arr.push((current_page + 1).toString())
         }
-
+        
         if (current_page + 2 < total_pages) {
           // utilizado para simbolizar que existem páginas entre a listagem e o inicial
           arr.push('...')
@@ -33,7 +33,7 @@ const PaginationService = {
         if (current_page < total_pages) {
           arr.push(total_pages.toString());
         }
-      }
+      } 
     } else {
       for(let i = 2; i <= total_pages; i++) {
         arr.push(i.toString());

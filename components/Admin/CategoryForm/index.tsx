@@ -67,7 +67,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ handleSubmit, action = 'Adi
                 type_button="blue" 
                 type="submit"
             />
-
+            
             <StyledButton 
                 icon={faTimes} 
                 action={"Cancelar"} 
