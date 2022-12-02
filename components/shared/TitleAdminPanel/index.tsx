@@ -9,10 +9,10 @@ interface TitleAdminPanelProps {
     title: string;
     path: string;
     icon?: IconProp;
-    newPath: string;
+    newPath?: string;
 }
 
-const TitleAdminPanel: React.FC<TitleAdminPanelProps> = ({ title, path, icon, newPath }) => {
+const TitleAdminPanel: React.FC<TitleAdminPanelProps> = ({ title, path, icon, newPath = '#' }) => {
     return (
         <Row className="mt-4">
             {
@@ -23,7 +23,7 @@ const TitleAdminPanel: React.FC<TitleAdminPanelProps> = ({ title, path, icon, ne
                         </Col>
 
                         <Col lg={6} xs={8}>
-                            <SearchAndIcon icon={icon} newPath={newPath} />
+                            <SearchAndIcon icon={icon} newPath={newPath}/>
                         </Col>
                     </>
                 :

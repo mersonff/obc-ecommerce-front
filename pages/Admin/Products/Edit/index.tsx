@@ -22,7 +22,7 @@ const Edit: React.FC = () => {
       await ProductsService.update(product);
 
       toast.info('Produto atualizado com sucesso!');
-
+      
       // limpando o produto para edição do redux
       dispatch(clearProductToEdit());
       router.back();

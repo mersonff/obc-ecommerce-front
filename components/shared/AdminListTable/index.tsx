@@ -19,19 +19,19 @@ const AdminListTable: React.FC<AdminListTableProps> = ({ children, first_title, 
     <div className={styles.admin_panel}>
       <Table borderless={true} hover={true} responsive={true}>
         <thead>
-        <tr>
-          {first_title && <th>{first_title}</th>}
-          {second_title && <th>{second_title}</th>}
-          {third_title && <th>{third_title}</th>}
-          {fourth_title && <th>{fourth_title}</th>}
-          {fifth_title && <th>{fifth_title}</th>}
-          {sixth_title && <th>{sixth_title}</th>}
-          <th colSpan={2}>Ações</th>
-        </tr>
+          <tr>
+            {first_title && <th>{first_title}</th>}
+            {second_title && <th>{second_title}</th>}
+            {third_title && <th>{third_title}</th>}
+            {fourth_title && <th>{fourth_title}</th>}
+            {fifth_title && <th>{fifth_title}</th>}
+            {sixth_title && <th>{sixth_title}</th>}
+            <th colSpan={2}>Ações</th>
+          </tr>
         </thead>
 
         <tbody>
-        {children}
+          {children}
         </tbody>
       </Table>
 

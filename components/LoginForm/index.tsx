@@ -1,32 +1,34 @@
-import React from 'react';
-import { InputGroup, FormControl, Button, Row, Col } from 'react-bootstrap';
-import BlueBackground from '../shared/BlueBackground';
-
-import AuthState from '../../dtos/AuthState';
-import User from '../../dtos/User';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { InputGroup, FormControl, Button, Row, Col } from 'react-bootstrap';
+import BlueBackground from '../shared/BlueBackground';
+
 import { setLoggedUser } from '../../store/modules/auth/reducer';
-import UsersService from '../../services/users';
-import { toast } from 'react-toastify';
+
 import Link from 'next/link';
 
+import UsersService from '../../services/users';
+
+import { toast } from 'react-toastify';
+
+import AuthState from '../../dtos/AuthState';
+import User from '../../dtos/User';
+
 interface LoginProps {
-  titlePhrase: String,
-  buttonPhrase: String
+  titlePhrase: string;
+  buttonPhrase: string;
 }
 
 const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const passwordRef = useRef(null);
 
   const loggedUser: User = useSelector((state: AuthState) => state.auth.loggedUser);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(loggedUser) {
@@ -39,7 +41,7 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
 
   const handleSubmit = async (evt: React.FormEvent): Promise<void> => {
     evt.preventDefault();
-
+    
     try {
       const response = await UsersService.signIn({ email, password });
 
@@ -54,24 +56,29 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
 
       dispatch(setLoggedUser(user));
 
-      toast.info('Logago com sucesso');
-      router.push(user.profile === 'admin' ? '/Admin/' : '/')
+      toast.info('Login realizado com sucesso!');
 
+      if (router.query.callback) {
+        router.push(decodeURIComponent(router.query.callback.toString()));
+      } else {
+        router.push(user.profile === 'admin' ? '/Admin' : '/')
+      }
     } catch (err) {
-      toast.error('E-mail e/ou senha incorretor!');
+      toast.error('E-mail ou senha inválidos!');
     }
   }
-
   return (
+
     <form onSubmit={handleSubmit}>
       <Row>
-        <Col lg={{span: 6, offset: 3}} md={{span: 8, offset: 2}}>
+        <Col lg={{ span: 6, offset: 3 }} md={{ span: 8, offset: 2 }}>
           <BlueBackground>
-            <h4>{ titlePhrase }</h4>
+            <h4>{titlePhrase}</h4>
+
 
             <InputGroup className="mt-3">
               <FormControl
-                placeholder="Meu E-mail"
+                placeholder="Meu e-mail"
                 value={email}
                 type="email"
                 onChange={
@@ -84,7 +91,7 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
 
             <InputGroup className="mt-3">
               <FormControl
-                placeholder="Minha Senha"
+                placeholder="Senha"
                 value={password}
                 type="password"
                 onChange={
@@ -96,8 +103,10 @@ const LoginForm: React.FC<LoginProps> = ({ titlePhrase, buttonPhrase }) => {
               />
             </InputGroup>
 
-            <Button type="submit" className="btn btn-info mt-3 w-100">{ buttonPhrase }</Button>
+            <Button type="submit" className="btn btn-info mt-3 w-100">{buttonPhrase}</Button>
+
             <br />
+
             <Link href="/Auth/PasswordRecovery">Esqueci minha senha</Link> <br />
           </BlueBackground>
         </Col>

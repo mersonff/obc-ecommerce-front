@@ -47,7 +47,7 @@ const List: React.FC = () => {
     )
   }, [search, router.query.page]);
 
-  // mostrando o motal de remoção e setando o id para remoção da categoria
+  // mostrando o modal de remoção e setando o id para remoção da categoria
   const handleShow = (id: number): void => {
     setShow(true);
     setCategoryToRemove(id);

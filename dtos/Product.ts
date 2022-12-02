@@ -15,4 +15,4 @@ export default interface Product {
   featured: string;
   categories: Category[];
   system_requirement: SystemRequirement;
-};
+}

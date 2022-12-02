@@ -6,4 +6,4 @@ const SignOutService = {
   }
 }
 
-export default SignOutService; 
+export default SignOutService;
